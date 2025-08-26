@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { getCurrentSession } from '../lib/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,60 +12,22 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-  const location = useLocation();
+  const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuth = () => {
       try {
         console.log('Checking authentication...');
         
-        // Check for mock session
-        const mockSession = localStorage.getItem('mockSession');
-        const currentUserEmail = localStorage.getItem('currentUserEmail');
+        const session = getCurrentSession();
         
-        if (mockSession) {
-          try {
-            const session = JSON.parse(mockSession);
-            if (session.expires_at > Date.now()) {
-              console.log('Valid mock session found for:', session.user.email);
-              
-              // Load full user account data if available
-              if (currentUserEmail) {
-                const accountKey = `account_${currentUserEmail}`;
-                const userAccount = localStorage.getItem(accountKey);
-                if (userAccount) {
-                  const accountData = JSON.parse(userAccount);
-                  // Merge account data with session user
-                  session.user = {
-                    ...session.user,
-                    ...accountData,
-                    user_metadata: {
-                      ...session.user.user_metadata,
-                      ...accountData.user_metadata
-                    }
-                  };
-                }
-              }
-              
-              setUser(session.user);
-              setLoading(false);
-              return;
-            } else {
-              console.log('Mock session expired, removing...');
-              localStorage.removeItem('mockSession');
-              localStorage.removeItem('mockUser');
-              localStorage.removeItem('currentUserEmail');
-            }
-          } catch (parseError) {
-            console.error('Error parsing mock session:', parseError);
-            localStorage.removeItem('mockSession');
-            localStorage.removeItem('mockUser');
-            localStorage.removeItem('currentUserEmail');
-          }
+        if (session) {
+          console.log('Valid session found for:', session.user.email);
+          setUser(session.user);
+        } else {
+          console.log('No valid session found');
+          setUser(null);
         }
-
-        console.log('No valid session found');
-        setUser(null);
       } catch (err) {
         console.error('Auth check failed:', err);
         setUser(null);
@@ -87,9 +51,10 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!user) {
-    // Redirect to login, preserving the intended destination
+    // Redirect to login
     console.log('No user found, redirecting to login');
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    router.push('/login');
+    return null;
   }
 
   console.log('User authenticated:', user.email);

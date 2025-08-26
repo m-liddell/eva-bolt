@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   Target, BookOpen, ChevronDown, CheckCircle2, Plus, 
   Info, ArrowRight, Users, Clock, Calendar, Lightbulb, Edit2, ChevronRight,
@@ -86,14 +86,14 @@ const HeaderSection = ({
   showGuidance: boolean;
   onToggleGuidance: (show: boolean) => void;
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <button 
-            onClick={() => navigate('/my-timetable')}
+            onClick={() => router.push('/my-timetable')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -361,11 +361,10 @@ const EditLessonPopup = ({ lesson, onClose }: { lesson: Lesson; onClose: () => v
 
 // Main Component
 const LessonEditPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   
   // URL params
-  const searchParams = new URLSearchParams(location.search);
   const termParam = searchParams.get('term');
   const weekParam = searchParams.get('week');
   
@@ -412,10 +411,11 @@ const LessonEditPage = () => {
   const handleTermChange = useCallback((term: string) => {
     setCurrentTerm(term);
     // Update URL without navigation
-    const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams();
+    searchParams.forEach((value, key) => newSearchParams.set(key, value));
     newSearchParams.set('term', term.toLowerCase().replace(' ', ''));
-    window.history.replaceState({}, '', `${location.pathname}?${newSearchParams.toString()}`);
-  }, [searchParams, location.pathname]);
+    router.replace(`/resources?${newSearchParams.toString()}`);
+  }, [searchParams, router]);
 
   const handleToggleGuidance = useCallback((show: boolean) => {
     setShowGuidance(show);
@@ -423,20 +423,20 @@ const LessonEditPage = () => {
 
   // Step navigation handlers
   const onStep1AddLessons = useCallback(() => {
-    navigate('/my-timetable');
-  }, [navigate]);
+    router.push('/my-timetable');
+  }, [router]);
 
   const onStep2AddThemes = useCallback(() => {
-    navigate('/curriculum-objectives');
-  }, [navigate]);
+    router.push('/curriculum-objectives');
+  }, [router]);
 
   const onStep3EditLessons = useCallback(() => {
     // Already on this page
   }, []);
 
   const onStep4ApproveWeek = useCallback(() => {
-    navigate(`/approve-week?term=${currentTerm}&week=${currentWeek}`);
-  }, [navigate, currentTerm, currentWeek]);
+    router.push(`/approve-week?term=${currentTerm}&week=${currentWeek}`);
+  }, [router, currentTerm, currentWeek]);
 
   // Effects
   useEffect(() => {

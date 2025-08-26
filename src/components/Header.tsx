@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, Bell, Search, Users, Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 
 const getUserInitials = (): string => {
@@ -35,8 +38,8 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick, onAIClick, lessonInfo }: HeaderProps) {
-  const location = useLocation();
-  const isLessonPage = location.pathname.includes('/lesson/');
+  const pathname = usePathname();
+  const isLessonPage = pathname.includes('/lesson/');
 
   const getPhaseIcon = () => {
     if (!lessonInfo?.phase) return null;
@@ -77,7 +80,7 @@ export function Header({ onMenuClick, onAIClick, lessonInfo }: HeaderProps) {
             onClick={onMenuClick}
           />
           <Link 
-            to="/" 
+            href="/" 
             className="text-lg font-bold text-[#FFC83D]"
           >
             EVA

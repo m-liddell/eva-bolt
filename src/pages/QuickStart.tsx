@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { 
   Search, BookOpen, Clock, Users, Brain, CheckCircle2, Eye, Play, 
   Target, ChevronLeft, Filter, X 
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import { allEnhancedActivities } from '../data/enhancedLessonActivities';
 import { ActivityDetailsModal } from '../components/ActivityDetailsModal';
 
@@ -191,7 +190,7 @@ const matchesTheme = (activity: LessonActivity, themeQuery: string): boolean => 
 
 // Main Component
 export default function QuickStart() {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // State
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTER_STATE);
@@ -212,39 +211,8 @@ export default function QuickStart() {
       setLoading(true);
       setError(null);
 
-      let allActivities = [...allEnhancedActivities];
-
-      try {
-        const { data, error: fetchError } = await supabase
-          .from('lesson_activities')
-          .select(`
-            *,
-            activity_details (
-              id,
-              activity_id,
-              preparation,
-              steps,
-              tips,
-              differentiation,
-              assessment,
-              answers
-            )
-          `)
-          .order('created_at', { ascending: false });
-
-        if (fetchError) throw fetchError;
-
-        const transformedData: LessonActivity[] = (data || []).map(activity => ({
-          ...activity,
-          details: Array.isArray(activity.activity_details) 
-            ? activity.activity_details[0] 
-            : activity.activity_details
-        }));
-
-        allActivities = [...allEnhancedActivities, ...transformedData];
-      } catch (dbError) {
-        console.warn('Database unavailable, using enhanced activities only:', dbError);
-      }
+      // Use only enhanced activities since we removed Supabase
+      const allActivities = [...allEnhancedActivities];
 
       setActivities(allActivities);
     } catch (err) {
@@ -336,11 +304,11 @@ export default function QuickStart() {
     const route = getActivityRoute(activity);
     
     if (route) {
-      navigate(route, { state: createLessonState(activity) });
+      router.push(route);
     } else {
       setViewingActivity(activity);
     }
-  }, [navigate, getActivityRoute, createLessonState]);
+  }, [router, getActivityRoute, createLessonState]);
 
   const handleStartLesson = useCallback(() => {
     if (!hasCompleteLesson) {
@@ -364,8 +332,8 @@ export default function QuickStart() {
       activities: selectedActivities
     };
 
-    navigate('/teach/lesson', { state: { lesson } });
-  }, [hasCompleteLesson, hasRequiredSelections, filters, selectedActivities, navigate]);
+    router.push('/teach/lesson');
+  }, [hasCompleteLesson, hasRequiredSelections, filters, selectedActivities, router]);
 
   return (
     <div className="min-h-screen bg-[#F8F9FA]">

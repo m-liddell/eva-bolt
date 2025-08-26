@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, ChevronDown, BookOpen, AlertCircle, Target, FileText, Plus, X, Clock, Users, Brain, CheckCircle2, Eye, MessageCircle, Package, ChevronRight, Calendar, ChevronLeft, Edit2, ExternalLink, Play, Sparkles, ArrowRight, GraduationCap, ArrowLeft, Info } from 'lucide-react';
 import { useTimetableStore } from '../store/timetableStore';
 import { TERMS } from '../store/termStore';
@@ -79,16 +79,16 @@ function SimplifiedPlanningSteps({
   const handleStepClick = (step: number) => {
     switch (step) {
       case 1:
-        navigate('/my-timetable');
+        router.push('/my-timetable');
         break;
       case 2:
         onStep2AddThemes();
         break;
       case 3:
-        navigate('/resources');
+        router.push('/resources');
         break;
       case 4:
-        navigate(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
+        router.push(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
         break;
     }
   };
@@ -162,8 +162,8 @@ function SimplifiedPlanningSteps({
 }
 
 export default function CurriculumObjectives() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { showOnboarding, setShowOnboarding, completeOnboarding, setOnboardingStep } = useOnboarding();
   const { 
     getLessonsByTerm, 
@@ -173,7 +173,6 @@ export default function CurriculumObjectives() {
     updateLessonActivities 
   } = useTimetableStore();
   
-  const searchParams = new URLSearchParams(location.search);
   const termParam = searchParams.get('term');
   
   const [currentTerm, setCurrentTerm] = useState(() => {
@@ -350,7 +349,7 @@ export default function CurriculumObjectives() {
     setHasCompletedThemes(true);
     setCompletedSteps(prev => new Set([...prev, 2]));
     // Navigate to step 3
-    navigate('/resources');
+    router.push('/resources');
   };
 
   const getLessonsForClassAndWeek = (classLesson: any, week: number) => {
@@ -470,6 +469,7 @@ export default function CurriculumObjectives() {
                 </p>
                 <button
                   onClick={() => navigate('/my-timetable')}
+                  onClick={() => router.push('/my-timetable')}
                   className="px-6 py-3 bg-[#FFC83D] text-white rounded-lg hover:bg-[#E6B535] transition-colors flex items-center gap-2 mx-auto"
                 >
                   <Plus className="w-5 h-5" />

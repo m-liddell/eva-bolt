@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Home, BookOpen, GraduationCap, ClipboardList, Brain, FileText, Settings, Library, Calendar, Users, Target, BarChart2, ChevronDown } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface SlidingMenuProps {
   isOpen: boolean;
@@ -18,7 +21,7 @@ interface MenuItem {
 }
 
 export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const menuItems: MenuItem[] = [
     { 
       icon: Home, 
@@ -95,7 +98,7 @@ export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
     if (item.subItems) {
       setExpandedItem(expandedItem === item.label ? null : item.label);
     } else {
-      navigate(item.path);
+      router.push(item.path);
       onClose();
     }
   };
@@ -108,7 +111,7 @@ export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <Link 
-              to="/"
+              href="/"
               onClick={onClose}
               className="text-lg font-bold text-[#FFC83D]"
             >
@@ -143,7 +146,7 @@ export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
                     </button>
                   ) : (
                     <Link
-                      to={item.path}
+                      href={item.path}
                       onClick={onClose}
                       className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
                     >
@@ -157,7 +160,7 @@ export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
                       {item.subItems.map((subItem) => (
                         <li key={subItem.path}>
                           <Link
-                            to={subItem.path}
+                            href={subItem.path}
                             className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
                             onClick={onClose}
                           >
@@ -180,7 +183,7 @@ export function SlidingMenu({ isOpen, onClose }: SlidingMenuProps) {
               {adminItems.map((item) => (
                 <li key={item.label}>
                   <Link
-                    to={item.path}
+                    href={item.path}
                     className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700"
                     onClick={onClose}
                   >

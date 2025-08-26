@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   Target, BookOpen, ChevronDown, CheckCircle2, Plus, 
   Info, ArrowRight, Users, Clock, Calendar, Lightbulb, Edit2, ChevronLeft, ChevronRight,
@@ -384,12 +384,11 @@ const EmptyState = ({ onAddLesson }: { onAddLesson: () => void }) => {
 
 // Main Component
 function TermSchedule() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { showOnboarding, setShowOnboarding, completeOnboarding, setOnboardingStep } = useOnboarding();
   
   // URL Parameters
-  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const termParam = searchParams.get('term');
   const weekParam = searchParams.get('week');
   const returnStepParam = searchParams.get('returnStep');
@@ -481,7 +480,7 @@ function TermSchedule() {
     if (returnStepParam) {
       // Clean up the URL
       const term = currentTerm.toLowerCase().split(' ')[0];
-      navigate(`/my-timetable?term=${term}`, { replace: true });
+      router.replace(`/my-timetable?term=${term}`);
       
       // Check which step was completed based on current lesson state
       const hasThemes = lessons.length > 0 && lessons.every(lesson => lesson.theme);
@@ -503,7 +502,7 @@ function TermSchedule() {
         stepCompletion.markStepComplete(currentTerm, 3, "Step 3 completed! Activities have been added to your lessons.");
       }
     }
-  }, [returnStepParam, navigate, currentTerm, lessons, stepCompletion]);
+  }, [returnStepParam, router, currentTerm, lessons, stepCompletion]);
 
   // Event Handlers
   const handleAddLesson = useCallback((lessonsData: LessonData[]) => {
@@ -575,18 +574,18 @@ function TermSchedule() {
     // Store return path in sessionStorage for the floating button
     const returnPath = `/my-timetable?term=${currentTerm.toLowerCase().split(' ')[0]}&returnStep=true`;
     sessionStorage.setItem('returnPath', returnPath);
-    navigate('/curriculum-objectives');
+    router.push('/curriculum-objectives');
   };
 
   const handleStep3EditLessons = () => {
     // Store return path in sessionStorage for the floating button
     const returnPath = `/my-timetable?term=${currentTerm.toLowerCase().split(' ')[0]}&returnStep=true`;
     sessionStorage.setItem('returnPath', returnPath);
-    navigate('/resources');
+    router.push('/resources');
   };
 
   const handleStep4ApproveWeek = () => {
-    navigate(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
+    router.push(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
   };
 
   // Manual completion handler for step 1
