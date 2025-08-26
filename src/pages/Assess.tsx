@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, ChevronRight, ChevronLeft, BookOpen, AlertCircle, Target, FileText, Info, Edit2, Save, Plus, Upload, Check, Clock, Users, Brain, CheckCircle2, Eye, MessageCircle, Settings } from 'lucide-react';
 import { Calendar as CalendarComponent } from '../components/Calendar';
 import { useTimetableStore } from '../store/timetableStore';
@@ -493,7 +493,7 @@ function QuickAssessView({ lesson, onBack }: QuickAssessViewProps) {
 }
 
 function Assess() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { showOnboarding, setShowOnboarding, completeOnboarding } = useOnboarding();
   const [showGuidance, setShowGuidance] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -690,7 +690,7 @@ function Assess() {
                 {/* Student Self-Assess */}
                 <button 
                   disabled={activeStep < 3}
-                  onClick={() => navigate('/student-self-assessment')}
+                  onClick={() => router.push('/student-self-assessment')}
                   className={`w-full p-3 bg-gray-50 border border-gray-200 rounded-lg ${
                     activeStep >= 3 ? 'hover:border-[#FFC83D]' : 'cursor-not-allowed'
                   } transition-colors text-left`}
@@ -709,7 +709,7 @@ function Assess() {
                 {/* Detailed Assessment */}
                 <button 
                   disabled={activeStep < 3}
-                  onClick={() => navigate('/detailed-assessment')}
+                  onClick={() => router.push('/detailed-assessment')}
                   className={`w-full p-3 bg-gray-50 border border-gray-200 rounded-lg ${
                     activeStep >= 3 ? 'hover:border-[#FFC83D]' : 'cursor-not-allowed'
                   } transition-colors text-left`}

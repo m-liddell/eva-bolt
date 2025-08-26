@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   ChevronLeft, 
   ChevronRight,
@@ -424,9 +424,12 @@ const ApprovalSummary: React.FC<{
 
 // Main Component
 export default function ApproveWeek() {
-  const navigate = useNavigate();
-  const { termParam, weekParam } = useUrlParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { isLessonFullyPlanned, analyzeLessonIssues } = useLessonAnalysis();
+  
+  const termParam = getTermFromParam(searchParams.get('term') || 'autumn');
+  const weekParam = parseInt(searchParams.get('week') || '1');
   
   const [currentTerm, setCurrentTerm] = useState(termParam);
   const [currentWeek, setCurrentWeek] = useState(weekParam);
@@ -534,7 +537,7 @@ export default function ApproveWeek() {
                 <h3 className="font-medium text-gray-800 mb-1">Add Lessons</h3>
                 <p className="text-sm text-gray-600 mb-4">Create your lesson schedule</p>
                 <button
-                  onClick={() => navigate('/my-timetable')}
+                  onClick={() => router.push('/my-timetable')}
                   className="w-full px-4 py-2 bg-green-500 text-white rounded-lg cursor-default flex items-center justify-center gap-2 mb-2"
                   disabled
                 >
@@ -551,7 +554,7 @@ export default function ApproveWeek() {
                 <h3 className="font-medium text-gray-800 mb-1">Add Themed Units</h3>
                 <p className="text-sm text-gray-600 mb-4">Group lessons into themes</p>
                 <button
-                  onClick={() => navigate('/curriculum-objectives')}
+                  onClick={() => router.push('/curriculum-objectives')}
                   className="w-full px-4 py-2 bg-green-500 text-white rounded-lg cursor-default flex items-center justify-center gap-2 mb-2"
                   disabled
                 >
@@ -568,7 +571,7 @@ export default function ApproveWeek() {
                 <h3 className="font-medium text-gray-800 mb-1">Edit Individual Lessons</h3>
                 <p className="text-sm text-gray-600 mb-4">Add activities to lessons</p>
                 <button
-                  onClick={() => navigate('/resources')}
+                  onClick={() => router.push('/resources')}
                   className="w-full px-4 py-2 bg-green-500 text-white rounded-lg cursor-default flex items-center justify-center gap-2 mb-2"
                   disabled
                 >
@@ -842,7 +845,7 @@ export default function ApproveWeek() {
                                     <Eye className="w-4 h-4 text-gray-600" />
                                   </button>
                                   <button
-                                    onClick={() => navigate('/resources', { state: { lesson } })}
+                                    onClick={() => router.push('/resources', { state: { lesson } })}
                                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                                     title="Edit lesson"
                                   >
@@ -868,7 +871,7 @@ export default function ApproveWeek() {
             </p>
             <div className="grid grid-cols-3 gap-4">
               <button
-                onClick={() => navigate('/my-timetable')}
+                onClick={() => router.push('/my-timetable')}
                 className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
@@ -878,7 +881,7 @@ export default function ApproveWeek() {
                 <span className="text-xs text-gray-600">Add or remove lessons</span>
               </button>
               <button
-                onClick={() => navigate('/curriculum-objectives')}
+                onClick={() => router.push('/curriculum-objectives')}
                 className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mb-2">
@@ -888,7 +891,7 @@ export default function ApproveWeek() {
                 <span className="text-xs text-gray-600">Add curriculum themes</span>
               </button>
               <button
-                onClick={() => navigate('/resources')}
+                onClick={() => router.push('/resources')}
                 className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mb-2">
@@ -925,7 +928,7 @@ export default function ApproveWeek() {
                   <button
                     onClick={() => {
                       setShowApprovalModal(false);
-                     navigate('/');
+                     router.push('/');
                     }}
                     className="px-4 py-2 bg-[#FFC83D] text-white rounded-lg hover:bg-[#E6B434] transition-colors"
                   >
