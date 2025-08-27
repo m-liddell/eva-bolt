@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { default as CreativeApplicationTemplate } from '../../components/templates/CreativeApplicationTemplate';
 
 export default function CharacterConversationsPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',

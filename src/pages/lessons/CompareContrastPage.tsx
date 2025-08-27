@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Scale, Brain, BarChart2, Eye, ArrowLeftRight, CheckCircle } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
@@ -18,7 +18,7 @@ interface ComparisonType {
 }
 
 export default function CompareContrastPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { theme } = useTheme();
   const [selectedComparison, setSelectedComparison] = useState<ComparisonType | null>(null);
   const [showExamples, setShowExamples] = useState(false);
@@ -411,8 +411,8 @@ export default function CompareContrastPage() {
 
           {/* Navigation */}
           <div className="flex justify-between mt-8">
-            <NavigationArrow direction="left" onClick={() => navigate('/')} />
-            <NavigationArrow direction="right" onClick={() => navigate('/lesson/compare-contrast/part2')} />
+            <NavigationArrow direction="left" onClick={() => router.push('/')} />
+            <NavigationArrow direction="right" onClick={() => router.push('/lesson/compare-contrast/part2')} />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { default as ShowcaseAnalysisTemplate } from '../../components/templates/ShowcaseAnalysisTemplate';
 import { StudentActivityModal } from '../../components/StudentActivityModal';
 import { getStudentActivityByLessonAndPhase } from '../../data/studentActivities';
@@ -9,14 +9,14 @@ import { MiniAssistant } from '../../components/MiniAssistant';
 import { Share2, BookOpen, Brain, CheckCircle2 } from 'lucide-react';
 
 export default function DystopianLesson5Plenary() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showStudentActivity, setShowStudentActivity] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 7',
     class: 'A',
     subject: 'English',
@@ -297,8 +297,8 @@ export default function DystopianLesson5Plenary() {
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <NavigationArrow direction="left" onClick={() => navigate('/lesson/dystopian-lesson-5/starter')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/admin/lesson-library')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/lesson/dystopian-lesson-5/starter')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/admin/lesson-library')} />
             </div>
           </div>
         </div>

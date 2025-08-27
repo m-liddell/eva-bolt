@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BookOpen, Brain, CheckCircle2 } from 'lucide-react';
 import InteractiveExplorationTemplate from '../../components/templates/InteractiveExplorationTemplate';
 import { StudentActivityModal } from '../../components/StudentActivityModal';
 import { getStudentActivityByLessonAndPhase } from '../../data/studentActivities';
 
 export default function DystopianLesson5Starter() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showStudentActivity, setShowStudentActivity] = useState(false);
 
   const lessonData = {
@@ -80,14 +80,14 @@ export default function DystopianLesson5Starter() {
                 <span>Starter</span>
               </button>
               <button
-                onClick={() => navigate('/lesson/dystopian-lesson-5/main')}
+                onClick={() => router.push('/lesson/dystopian-lesson-5/main')}
                 className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Main</span>
               </button>
               <button
-                onClick={() => navigate('/lesson/dystopian-lesson-5/plenary')}
+                onClick={() => router.push('/lesson/dystopian-lesson-5/plenary')}
                 className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
               >
                 <CheckCircle2 className="w-4 h-4" />

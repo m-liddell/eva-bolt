@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Users, MessageCircle, RotateCcw, Clock, BookOpen, Brain, CheckCircle2, Play, Pause, ArrowRight, X } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
@@ -7,8 +7,8 @@ import { MiniAssistant } from '../../components/MiniAssistant';
 import { StudentActivityModal } from '../../components/StudentActivityModal';
 
 export default function SocraticCircleReflectionPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showStudentActivity, setShowStudentActivity] = useState(false);
   const [currentRole, setCurrentRole] = useState<'inner' | 'outer'>('inner');
   const [timer, setTimer] = useState<number | null>(null);
@@ -20,7 +20,7 @@ export default function SocraticCircleReflectionPage() {
   const [showAssistHelp, setShowAssistHelp] = useState(false);
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',
@@ -622,8 +622,8 @@ export default function SocraticCircleReflectionPage() {
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <NavigationArrow direction="left" onClick={() => navigate('/')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/admin/lesson-library')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/admin/lesson-library')} />
             </div>
           </div>
         </div>

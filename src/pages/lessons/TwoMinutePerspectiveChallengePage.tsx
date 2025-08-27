@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Clock, Users, Target, Play, Pause, RotateCcw, CheckCircle2, AlertCircle, Timer } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
 import { MiniAssistant } from '../../components/MiniAssistant';
 
 export default function TwoMinutePerspectiveChallengePage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentStudent, setCurrentStudent] = useState(0);
   const [timer, setTimer] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -17,7 +17,7 @@ export default function TwoMinutePerspectiveChallengePage() {
   const [evaluationNotes, setEvaluationNotes] = useState('');
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',
@@ -480,8 +480,8 @@ export default function TwoMinutePerspectiveChallengePage() {
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <NavigationArrow direction="left" onClick={() => navigate('/')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/admin/lesson-library')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/admin/lesson-library')} />
             </div>
           </div>
         </div>

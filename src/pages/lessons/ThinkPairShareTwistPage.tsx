@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { default as QuickFireDiscussionTemplate } from '../../components/templates/QuickFireDiscussionTemplate';
 import { StudentActivityModal } from '../../components/StudentActivityModal';
 
 export default function ThinkPairShareTwistPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showStudentActivity, setShowStudentActivity] = useState(false);
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',

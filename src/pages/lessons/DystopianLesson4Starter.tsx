@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 import { default as KnowledgeRetrievalGameTemplate } from '../../components/templates/KnowledgeRetrievalGameTemplate';
 import { StudentActivityModal } from '../../components/StudentActivityModal';
 import { getStudentActivityByLessonAndPhase } from '../../data/studentActivities';
 
 export default function DystopianLesson4Starter() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showStudentActivity, setShowStudentActivity] = useState(false);
 
   const lessonData = {

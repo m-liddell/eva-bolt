@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Mic, Users, Target, Play, Pause, Clock, CheckCircle2, AlertCircle, MessageSquare, User } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
 import { MiniAssistant } from '../../components/MiniAssistant';
 
 export default function PressConferenceSimulationPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [timer, setTimer] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [currentPhase, setCurrentPhase] = useState<'setup' | 'conference' | 'debrief'>('setup');
@@ -17,7 +17,7 @@ export default function PressConferenceSimulationPage() {
   const [conferenceNotes, setConferenceNotes] = useState('');
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',
@@ -573,8 +573,8 @@ export default function PressConferenceSimulationPage() {
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <NavigationArrow direction="left" onClick={() => navigate('/')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/admin/lesson-library')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/admin/lesson-library')} />
             </div>
           </div>
         </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { default as CreativeApplicationTemplate } from '../../components/templates/CreativeApplicationTemplate';
 
 export default function AlternativeEndingsPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const templateLessonData = {
     title: "Alternative Endings Workshop",
