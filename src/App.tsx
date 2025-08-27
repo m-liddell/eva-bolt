@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Components
 import { Header } from './components/Header';
@@ -87,26 +88,30 @@ function App({ children }: { children: React.ReactNode }) {
 
   if (isLoginPage) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
-        {children}
-      </div>
+      <ThemeProvider>
+        <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
+          {children}
+        </div>
+      </ThemeProvider>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
-      <ProtectedRoute>
-        <ProtectedApp
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-          showAIAssistant={showAIAssistant}
-          setShowAIAssistant={setShowAIAssistant}
-          lessonInfo={lessonInfo}
-        >
-          {children}
-        </ProtectedApp>
-      </ProtectedRoute>
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
+        <ProtectedRoute>
+          <ProtectedApp
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            showAIAssistant={showAIAssistant}
+            setShowAIAssistant={setShowAIAssistant}
+            lessonInfo={lessonInfo}
+          >
+            {children}
+          </ProtectedApp>
+        </ProtectedRoute>
+      </div>
+    </ThemeProvider>
   );
 }
 
