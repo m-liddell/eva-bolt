@@ -340,7 +340,7 @@ export default function QuickStart() {
       <div className="max-w-[1400px] mx-auto px-4 py-6">
         
         {/* Header */}
-        <Header onBack={() => navigate('/')} />
+        <Header onBack={() => router.push('/')} />
 
         {/* Filters */}
         <FilterSection

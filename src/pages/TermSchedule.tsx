@@ -184,7 +184,7 @@ const SmartPlanningSteps = ({
     markStepComplete: (term: string, step: number, message?: string) => void;
     isStepCompleted: (term: string, step: number) => boolean;
   };
-  router: any;
+  router: ReturnType<typeof useRouter>;
 }) => {
   const isWeekApproved = weekApprovalStatus;
   const handleManualComplete = (step: number) => {
@@ -628,7 +628,7 @@ function TermSchedule() {
           onStep3EditLessons={handleStep3EditLessons}
           onStep4ApproveWeek={handleStep4ApproveWeek}
           stepCompletion={stepCompletion}
-          navigate={navigate}
+          router={router}
         />
 
         {/* Main Content */}

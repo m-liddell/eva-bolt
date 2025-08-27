@@ -258,7 +258,7 @@ function AssessmentDesign() {
 
                 <div className="flex justify-end gap-4">
                   <button
-                    onClick={() => navigate('/assess')}
+                    onClick={() => router.push('/assess')}
                     className="px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     Back to Assessments

@@ -182,14 +182,6 @@ const getDefaultActivities = () => ({
 });
 
 // Custom Hooks
-const useUrlParams = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const termParam = getTermFromParam(searchParams.get('term') || 'autumn');
-  const weekParam = parseInt(searchParams.get('week') || '1');
-  
-  return { termParam, weekParam };
-};
 
 const useLessonAnalysis = () => {
   const isLessonFullyPlanned = (lesson: any): boolean => {

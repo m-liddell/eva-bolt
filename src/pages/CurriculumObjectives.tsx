@@ -33,7 +33,7 @@ function SimplifiedPlanningSteps({
   onStep2AddThemes,
   onStep3EditLessons,
   onStep4ApproveWeek,
-  navigate,
+  router,
   themesGenerated,
   completedSteps
 }: {
@@ -47,7 +47,7 @@ function SimplifiedPlanningSteps({
   onStep2AddThemes: () => void;
   onStep3EditLessons: () => void;
   onStep4ApproveWeek: () => void;
-  navigate: (path: string) => void;
+  router: any;
   themesGenerated: boolean;
   completedSteps: Set<number>;
 }) {
@@ -450,7 +450,7 @@ export default function CurriculumObjectives() {
               onStep2AddThemes={() => {}}
               onStep3EditLessons={() => navigate('/resources')}
               onStep4ApproveWeek={() => navigate(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=1`)}
-              navigate={navigate}
+              router={router}
               themesGenerated={false}
               completedSteps={completedSteps}
             />
@@ -468,7 +468,6 @@ export default function CurriculumObjectives() {
                   You need to create lessons first before adding themes.
                 </p>
                 <button
-                  onClick={() => navigate('/my-timetable')}
                   onClick={() => router.push('/my-timetable')}
                   className="px-6 py-3 bg-[#FFC83D] text-white rounded-lg hover:bg-[#E6B535] transition-colors flex items-center gap-2 mx-auto"
                 >

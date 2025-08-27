@@ -136,7 +136,7 @@ const SimplifiedPlanningSteps = ({
   onStep2AddThemes,
   onStep3EditLessons,
   onStep4ApproveWeek,
-  navigate
+  router
 }: {
   currentStep: number;
   lessons: Lesson[];
@@ -148,7 +148,7 @@ const SimplifiedPlanningSteps = ({
   onStep2AddThemes: () => void;
   onStep3EditLessons: () => void;
   onStep4ApproveWeek: () => void;
-  navigate: (path: string) => void;
+  router: any;
 }) => {
 
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set([1, 2])); // Steps 1 & 2 completed by this point
@@ -158,7 +158,7 @@ const SimplifiedPlanningSteps = ({
     if (step === 3) {
       // Navigate to step 4 when step 3 is completed
       setTimeout(() => {
-        navigate(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
+        router.push(`/approve-week?term=${currentTerm.toLowerCase().split(' ')[0]}&week=${currentWeek}`);
       }, 1000);
     }
   };
@@ -619,7 +619,7 @@ const LessonEditPage = () => {
           onStep2AddThemes={onStep2AddThemes}
           onStep3EditLessons={onStep3EditLessons}
           onStep4ApproveWeek={onStep4ApproveWeek}
-          navigate={navigate}
+          router={router}
         />
 
         <GuidancePanel 
