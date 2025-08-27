@@ -41,6 +41,13 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     checkAuth();
   }, []);
 
+  // Handle redirect in useEffect to avoid setState during render
+  useEffect(() => {
+    if (!loading && !user) {
+      console.log('No user found, redirecting to login');
+      router.push('/login');
+    }
+  }, [loading, user, router]);
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
@@ -53,9 +60,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!user) {
-    // Redirect to login
-    console.log('No user found, redirecting to login');
-    router.push('/login');
+    // Show loading while redirect happens
     return null;
   }
 
