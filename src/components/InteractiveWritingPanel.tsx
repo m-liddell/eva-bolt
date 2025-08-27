@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Clock, Save, Download, Users, MessageSquare, Eye, EyeOff, X } from 'lucide-react';
 

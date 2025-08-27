@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, Clock, Users, Target, Plus, Check, ChevronRight, BookOpen, Calendar, AlertCircle } from 'lucide-react';
 import { useTimetableStore } from '../store/timetableStore';

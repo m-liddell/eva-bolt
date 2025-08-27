@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Palette, Target, Clock, Save, Download, Share2, Brain, BookOpen, CheckCircle2 } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Upload, AlertCircle, Clock, Users, Target, Plus } from 'lucide-react';
 

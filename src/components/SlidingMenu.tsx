@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { X, Home, BookOpen, GraduationCap, ClipboardList, Brain, FileText, Settings, Library, Calendar, Users, Target, BarChart2, ChevronDown } from 'lucide-react';
 import Link from 'next/link';

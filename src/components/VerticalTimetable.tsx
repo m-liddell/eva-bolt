@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useRouter } from 'next/navigation';

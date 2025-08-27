@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Target, TrendingUp, Users, Clock, X } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { X, Send, Sparkles, Mail, FileText, Users, Calendar, MessageSquare, BookOpen, Target, Clock, Phone, AlertCircle } from 'lucide-react';
 

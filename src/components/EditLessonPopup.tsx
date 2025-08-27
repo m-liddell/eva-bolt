@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Edit2, Trash2, Sparkles, Save, Clock, Users, Target, Brain, BookOpen, CheckCircle2, Plus } from 'lucide-react';
 

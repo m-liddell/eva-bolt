@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Eye, EyeOff, Maximize2, Minimize2, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Globe, Rocket, Trophy, Clock } from 'lucide-react';

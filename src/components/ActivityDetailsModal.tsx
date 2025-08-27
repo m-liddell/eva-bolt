@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Clock, Users, Target, Brain, BookOpen, CheckCircle2, Lightbulb, Users2, MessageSquare, Globe, Award, Play, Maximize2, ExternalLink, ChevronRight, ChevronDown, Eye, Sparkles } from 'lucide-react';
 import { MiniAssistant } from './MiniAssistant';

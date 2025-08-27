@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Pause, SkipForward, Clock, Users, Target, Brain, BookOpen, CheckCircle2, ArrowLeft, ArrowRight, Eye, Settings, Timer, Volume2, VolumeX, Maximize2, Minimize2, ExternalLink } from 'lucide-react';

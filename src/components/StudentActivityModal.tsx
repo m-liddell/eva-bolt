@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Clock, Users, Target, Download, Save, CheckCircle2, Brain, BookOpen, FileText, Play, Pause, RotateCcw } from 'lucide-react';
 import { PDFGenerator } from './PDFGenerator';
