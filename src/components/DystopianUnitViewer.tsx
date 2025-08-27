@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { X, BookOpen, Brain, CheckCircle2, Clock, Users, Target, ChevronDown, ChevronUp, Play, Eye, Download, FileText, GraduationCap } from 'lucide-react';
 import InteractiveExplorationTemplate from './templates/InteractiveExplorationTemplate';
 import QuickFireDiscussionTemplate from './templates/QuickFireDiscussionTemplate';
@@ -19,7 +19,7 @@ interface DystopianUnitViewerProps {
 }
 
 export function DystopianUnitViewer({ onClose, showInPopup = false }: DystopianUnitViewerProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [selectedLesson, setSelectedLesson] = useState<number | null>(null);
   const [viewingActivity, setViewingActivity] = useState<any>(null);
   const [showInteractiveActivity, setShowInteractiveActivity] = useState<any>(null);

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { LessonTeachingInterface } from '../components/LessonTeachingInterface';
 import { allEnhancedActivities } from '../data/enhancedLessonActivities';
 
 export default function TeachLesson() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [lesson, setLesson] = useState<any>(null);
 
   // Function to get direct route to interactive lesson
@@ -81,10 +81,11 @@ export default function TeachLesson() {
   };
 
   useEffect(() => {
-    const lessonData = location.state?.lesson;
+    // In Next.js, we'll get lesson data from URL params or localStorage
+    const lessonData = null; // TODO: Implement lesson data retrieval
     if (!lessonData) {
       // If no lesson data, redirect back to home
-      navigate('/');
+      router.push('/');
       return;
     }
     
@@ -106,10 +107,7 @@ export default function TeachLesson() {
       }
       
       if (interactiveRoute) {
-        navigate(interactiveRoute, { 
-          state: { lesson: lessonData },
-          replace: true 
-        });
+        router.push(interactiveRoute);
         return;
       }
     }
@@ -117,10 +115,7 @@ export default function TeachLesson() {
     // For other themes, check for general interactive routes
     const interactiveRoute = getInteractiveLessonRoute(lessonData, startingPhase);
     if (interactiveRoute) {
-      navigate(interactiveRoute, { 
-        state: { lesson: lessonData },
-        replace: true 
-      });
+      router.push(interactiveRoute);
       return;
     }
     
@@ -171,7 +166,7 @@ export default function TeachLesson() {
   };
 
   const handleClose = () => {
-    navigate('/');
+    router.push('/');
   };
 
   if (!lesson) {

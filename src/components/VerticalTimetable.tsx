@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Users, CheckSquare, Square, Clock, Pencil, Trash2, AlertCircle, Info, X, BookOpen, Brain, CheckCircle2, Play, Target } from 'lucide-react';
 import { useTimetableStore } from '../store/timetableStore';
 import type { Lesson } from '../store/timetableStore';
@@ -79,7 +79,7 @@ const TIME_SLOTS = [
 ];
 
 export function VerticalTimetable({ term, termId, onEditLesson, currentWeek = 1 }: VerticalTimetableProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { 
     getLessonsByTerm, 
     toggleLessonSelection, 
@@ -252,7 +252,7 @@ export function VerticalTimetable({ term, termId, onEditLesson, currentWeek = 1 
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate('/curriculum-objectives', { state: { preselectedLesson: lesson } });
+                      router.push('/curriculum-objectives');
                     }}
                     className="p-0.5 hover:bg-gray-100 rounded transition-colors"
                     title="Change theme"

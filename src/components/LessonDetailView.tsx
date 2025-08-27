@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { X, Clock, Users, Target, Brain, BookOpen, CheckCircle2, Eye, ExternalLink, ChevronLeft, ChevronRight, Edit2, Calendar } from 'lucide-react';
 import { MiniAssistant } from './MiniAssistant';
 
@@ -15,7 +15,7 @@ interface LessonDetailViewProps {
 }
 
 export function LessonDetailView({ lessons, onClose, subjectWeek, currentWeek }: LessonDetailViewProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [currentActivity, setCurrentActivity] = useState<'starter' | 'main' | 'plenary'>('starter');
 
@@ -447,9 +447,9 @@ export function LessonDetailView({ lessons, onClose, subjectWeek, currentWeek }:
     // Navigate to the classroom-ready lesson based on activity type and current lesson data
     if (currentActivity === 'starter') {
       if (currentActivityData?.title === "Kick-Off") {
-        navigate('/lesson/kick-off');
+        router.push('/lesson/kick-off');
       } else if (currentActivityData?.title === "Dystopian Story Opening" || currentActivityData?.title === "Dystopian World Think-Pair-Share") {
-        navigate('/lesson/dystopian/starter');
+        router.push('/lesson/dystopian/starter');
       } else if (currentLesson?.subject === 'History') {
         // Could add specific history lesson routes here
         alert('Classroom-ready lesson view coming soon for History lessons.');
@@ -458,13 +458,13 @@ export function LessonDetailView({ lessons, onClose, subjectWeek, currentWeek }:
       }
     } else if (currentActivity === 'main') {
       if (currentActivityData?.title === "Dystopian World Building") {
-        navigate('/lesson/dystopian-writing');
+        router.push('/lesson/dystopian-writing');
       } else {
         alert('Classroom-ready lesson view coming soon for this activity type.');
       }
     } else if (currentActivity === 'plenary') {
       if (currentActivityData?.title === "Reflection of My Dystopian World") {
-        navigate('/lesson/dystopian/plenary');
+        router.push('/lesson/dystopian/plenary');
       } else {
         alert('Classroom-ready lesson view coming soon for this activity type.');
       }
@@ -480,14 +480,7 @@ export function LessonDetailView({ lessons, onClose, subjectWeek, currentWeek }:
     // Get the lesson from the lessons array (use first lesson as representative)
     const lessonToTeach = lessons[0];
     if (lessonToTeach) {
-      navigate('/teach/lesson', { 
-        state: { 
-          lesson: {
-            ...lessonToTeach,
-            startingPhase: currentActivity
-          }
-        } 
-      });
+      router.push('/teach/lesson');
     }
   };
 

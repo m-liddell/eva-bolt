@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 import { LessonLayout } from '../../components/LessonLayout';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { EvaluationReflectionTemplate } from '../../components/templates/EvaluationReflectionTemplate';
 
 const DystopianLesson1Plenary: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const lessonData = {
     title: "Dystopian Fiction: Lesson 1 - Plenary",

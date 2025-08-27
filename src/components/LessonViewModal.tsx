@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { X, Clock, Users, Target, Brain, BookOpen, CheckCircle2, ChevronRight, ChevronLeft, Eye, ExternalLink } from 'lucide-react';
 import { Lesson } from '../store/timetableStore';
 import { ActivityDetailsModal } from './ActivityDetailsModal';
@@ -11,7 +11,7 @@ interface LessonViewModalProps {
 }
 
 export function LessonViewModal({ lesson, onClose }: LessonViewModalProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [currentView, setCurrentView] = useState<'starter' | 'main' | 'plenary'>('starter');
   const [viewingActivity, setViewingActivity] = useState<any>(null);
   const [showFullLesson, setShowFullLesson] = useState(false);
@@ -45,14 +45,7 @@ export function LessonViewModal({ lesson, onClose }: LessonViewModalProps) {
 
   const handleViewInFullPage = () => {
     // Navigate to teaching interface with the specific phase
-    navigate('/teach/lesson', { 
-      state: { 
-        lesson: {
-          ...lesson,
-          startingPhase: currentView
-        }
-      } 
-    });
+    router.push('/teach/lesson');
   };
 
   const getActivityContent = () => {

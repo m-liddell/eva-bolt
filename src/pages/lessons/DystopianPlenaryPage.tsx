@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle, Brain, AlertTriangle } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
@@ -8,13 +8,13 @@ import { useTheme } from '../../context/ThemeContext';
 import { getThemeConfig } from '../../config/themes';
 
 export default function DystopianPlenaryPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { theme } = useTheme();
   const [selectedCriteria, setSelectedCriteria] = useState<string | null>(null);
   
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',

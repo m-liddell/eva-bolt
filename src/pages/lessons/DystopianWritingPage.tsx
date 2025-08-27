@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BookOpen, Brain, Target, Edit2, MessageSquare, Users } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
@@ -8,14 +8,14 @@ import { MiniAssistant } from '../../components/MiniAssistant';
 type ControlMechanism = 'Surveillance' | 'Propaganda' | 'Resource Control' | 'Social Division';
 
 const DystopianWritingPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [primaryControl, setPrimaryControl] = useState<ControlMechanism | null>(null);
   const [secondaryControl, setSecondaryControl] = useState<ControlMechanism | null>(null);
   
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Brain, Clock, Users, Target, BookOpen, CheckCircle2 } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
@@ -8,15 +8,15 @@ import { InteractiveImageViewer } from '../../components/InteractiveImageViewer'
 import { InteractiveWritingPanel } from '../../components/InteractiveWritingPanel';
 
 export default function StarterLesson1() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [timer, setTimer] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [imageAnalysis, setImageAnalysis] = useState<Record<string, string>>({});
   const [writingResponse, setWritingResponse] = useState('');
 
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',

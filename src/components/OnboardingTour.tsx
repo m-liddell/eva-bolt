@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowRight, ArrowLeft, BookOpen, GraduationCap, ClipboardList, CheckCircle2, Play, HelpCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 interface TourStep {
   id: string;
@@ -24,7 +24,7 @@ interface OnboardingTourProps {
 export function OnboardingTour({ isOpen, onClose, onComplete, currentContext = 'home' }: OnboardingTourProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
 
   const tourSteps: TourStep[] = [

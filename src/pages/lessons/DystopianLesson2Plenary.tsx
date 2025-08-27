@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { LessonLayout } from '../../components/LessonLayout';
 import { EvaluationReflectionTemplate } from '../../components/templates/EvaluationReflectionTemplate';
 
