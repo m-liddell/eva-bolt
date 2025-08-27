@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Calendar, Plus, Trash2, AlertCircle, X, Edit2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useTermStore, TERMS } from '../store/termStore';
 
 interface Term {
@@ -19,7 +19,7 @@ interface TermFormData {
 }
 
 export default function TermDates() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [currentYear, setCurrentYear] = useState('2024-25');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -166,7 +166,7 @@ export default function TermDates() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/settings')}
+             onClick={() => router.push('/settings')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

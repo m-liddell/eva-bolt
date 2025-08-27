@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Upload, AlertCircle, Clock, Users, Target, Plus } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 interface LessonUploadModalProps {
   onClose: () => void;
@@ -95,37 +94,31 @@ export function LessonUploadModal({ onClose, onSuccess }: LessonUploadModalProps
     setIsSubmitting(true);
 
     try {
-      // Insert the main activity
-      const { data: activityData, error: activityError } = await supabase
-        .from('lesson_activities')
-        .insert({
-          title: formData.title,
-          description: formData.description,
-          duration: formData.duration,
-          type: formData.type,
-          activity_type: formData.activity_type,
-          subject: formData.subject,
-          year_group: formData.year_group,
-          dialogic_structure: formData.dialogic_structure
-        })
-        .select()
-        .single();
-
-      if (activityError) throw activityError;
-
-      // Insert the activity details
-      const { error: detailsError } = await supabase
-        .from('activity_details')
-        .insert({
-          activity_id: activityData.id,
+      // Store lesson in localStorage (in real app, this would save to a database)
+      const newActivity = {
+        id: Date.now().toString(),
+        title: formData.title,
+        description: formData.description,
+        duration: formData.duration,
+        type: formData.type,
+        activity_type: formData.activity_type,
+        subject: formData.subject,
+        year_group: formData.year_group,
+        dialogic_structure: formData.dialogic_structure,
+        created_at: new Date().toISOString(),
+        details: {
           preparation: formData.details.preparation?.filter(Boolean),
           steps: formData.details.steps?.filter(Boolean),
           tips: formData.details.tips?.filter(Boolean),
           differentiation: formData.details.differentiation?.filter(Boolean),
           assessment: formData.details.assessment?.filter(Boolean)
-        });
-
-      if (detailsError) throw detailsError;
+        }
+      };
+      
+      // Save to localStorage
+      const existingActivities = JSON.parse(localStorage.getItem('customActivities') || '[]');
+      existingActivities.push(newActivity);
+      localStorage.setItem('customActivities', JSON.stringify(existingActivities));
 
       onSuccess();
       onClose();

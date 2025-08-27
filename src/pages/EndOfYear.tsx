@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, FileText, Search, Edit2, Save, Download, Users, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // Mock student data
 const MOCK_STUDENTS = [
@@ -39,7 +39,7 @@ const MOCK_STUDENTS = [
 ];
 
 export default function EndOfYear() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [editingStudent, setEditingStudent] = useState<string | null>(null);
   const [editedReports, setEditedReports] = useState<Record<string, typeof MOCK_STUDENTS[0]['report']>>({});
@@ -96,7 +96,7 @@ export default function EndOfYear() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

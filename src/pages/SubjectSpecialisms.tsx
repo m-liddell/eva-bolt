@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronLeft, BookOpen, Plus, X, Check } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useTeacherStore } from '../store/teacherStore';
 
 const SUBJECTS = [
@@ -11,7 +11,7 @@ const SUBJECTS = [
 const YEAR_GROUPS = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11'];
 
 export default function SubjectSpecialisms() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { profile, updateProfile } = useTeacherStore();
 
   const handleMainSubjectChange = (subject: string) => {
@@ -46,7 +46,7 @@ export default function SubjectSpecialisms() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/settings')}
+             onClick={() => router.push('/settings')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

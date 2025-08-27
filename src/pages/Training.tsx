@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ChevronLeft, Calendar, Clock, MapPin, GraduationCap, BookOpen, Users, ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // Mock training sessions
 const UPCOMING_SESSIONS = [
@@ -99,7 +99,7 @@ const RECOMMENDED_TRAINING = [
 ];
 
 export default function Training() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [upcomingIndex, setUpcomingIndex] = useState(0);
   const [recommendedIndex, setRecommendedIndex] = useState(0);
 
@@ -124,7 +124,7 @@ export default function Training() {
       <div className="max-w-[1400px] mx-auto px-4 py-6">
         <div className="flex items-center gap-4 mb-6">
           <button 
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <ChevronLeft className="w-5 h-5 text-gray-600" />

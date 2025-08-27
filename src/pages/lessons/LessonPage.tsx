@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { LessonLayout } from '../../components/LessonLayout';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
 
 export default function LessonPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div 
@@ -91,8 +91,8 @@ export default function LessonPage() {
             </div>
 
             <div className="flex justify-between mt-8">
-              <NavigationArrow direction="left" onClick={() => navigate('/library')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/lesson/dystopian/part2')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/library')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/lesson/dystopian/part2')} />
             </div>
           </div>
         </div>

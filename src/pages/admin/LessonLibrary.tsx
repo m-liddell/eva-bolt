@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, BookOpen, AlertCircle, Target, FileText, Plus, X, Clock, Users, Brain, CheckCircle2, Eye, MessageCircle, Settings, Upload, Trash2, RefreshCw, Heart, GraduationCap } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
 import { LessonUploadModal } from '../../components/LessonUploadModal';
 import { ActivityDetailsModal } from '../../components/ActivityDetailsModal';
 import { DystopianUnitViewer } from '../../components/DystopianUnitViewer';
@@ -107,7 +106,7 @@ const InteractiveLessonModal = ({ lesson, onClose }) => {
 };
 
 export default function LessonLibrary() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [activities, setActivities] = useState<LessonActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -134,35 +133,9 @@ export default function LessonLibrary() {
       setLoading(true);
       setError(null);
 
-      const enhancedActivities = [...allEnhancedActivities];
-
-      const { data, error: fetchError } = await supabase
-        .from('lesson_activities')
-        .select(`
-          *,
-          activity_details (
-            id,
-            activity_id,
-            preparation,
-            steps,
-            tips,
-            differentiation,
-            assessment,
-            answers
-          )
-        `)
-        .order('created_at', { ascending: false });
-
-      if (fetchError) throw fetchError;
-
-      const transformedData: LessonActivity[] = (data || []).map(activity => ({
-        ...activity,
-        details: Array.isArray(activity.activity_details) 
-          ? activity.activity_details[0] 
-          : activity.activity_details
-      }));
-
-      setActivities([...enhancedActivities, ...transformedData]);
+      // Use only enhanced activities since we removed Supabase
+      const allActivities = [...allEnhancedActivities];
+      setActivities(allActivities);
     } catch (err) {
       console.error('Error fetching activities:', err);
       setError(err instanceof Error ? err.message : 'Failed to load activities');

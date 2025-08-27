@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, Target, FileText, Edit2, Save, Download, Users, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 
 // Mock student data
@@ -41,7 +41,7 @@ const MOCK_STUDENTS = [
 const LEARNING_OBJECTIVE = 'To analyze how writers use language and structure to create tension in dystopian narratives.';
 
 export default function DetailedAssessment() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [editingFeedback, setEditingFeedback] = useState<string | null>(null);
   const [editedFeedback, setEditedFeedback] = useState<Record<string, string>>({});
 
@@ -72,7 +72,7 @@ export default function DetailedAssessment() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/assess')}
+             onClick={() => router.push('/assess')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

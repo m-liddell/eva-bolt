@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Target, BookOpen, ChevronLeft, Brain, CheckCircle2, ChevronRight, Calendar, ChevronDown, Users, Eye, Shield } from 'lucide-react';
 import { useTimetableStore } from '../store/timetableStore';
 import { TERMS } from '../store/termStore';
@@ -12,7 +12,7 @@ const TIME_SLOTS = [
 ];
 
 export default function WeeklyTimetable() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { showOnboarding, setShowOnboarding, completeOnboarding } = useOnboarding();
   const [currentWeek, setCurrentWeek] = useState(1);
   const [currentTerm, setCurrentTerm] = useState('Autumn 1');
@@ -58,7 +58,7 @@ export default function WeeklyTimetable() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate(-1)}
+             onClick={() => router.back()}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -114,7 +114,7 @@ export default function WeeklyTimetable() {
             </div>
             {weekApprovalStatus !== 'approved' && (
               <button
-                onClick={() => navigate('/approve-week')}
+                onClick={() => router.push('/approve-week')}
                 className="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
               >
                 Approve Week

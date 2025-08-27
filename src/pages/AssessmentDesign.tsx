@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, Target, AlertCircle, ChevronRight, FileText, Info, Edit2, Check, Upload, ChevronDown, Plus, Wand2 } from 'lucide-react';
 
 // Assessment types with their specific requirements
@@ -55,7 +55,7 @@ const ASSESSMENT_TYPES = {
 };
 
 function AssessmentDesign() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [showGuidance, setShowGuidance] = useState(false);
   const [selectedType, setSelectedType] = useState<keyof typeof ASSESSMENT_TYPES | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -77,7 +77,7 @@ function AssessmentDesign() {
     setIsSubmitting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate('/assess');
+      router.push('/assess');
     } catch (error) {
       alert('Failed to save assessment. Please try again.');
     } finally {
@@ -144,7 +144,9 @@ function AssessmentDesign() {
         ]
       };
 
-      navigate('/generated-assessment', { state: { assessment } });
+      router.push('/generated-assessment');
+      // Store assessment data in sessionStorage for the next page
+      sessionStorage.setItem('generatedAssessment', JSON.stringify(assessment));
     } catch (error) {
       alert('Failed to generate assessment. Please try again.');
     } finally {

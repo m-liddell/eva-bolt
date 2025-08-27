@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, Target, Search } from 'lucide-react';
 
 // Generate 30 mock students with random ratings
@@ -25,7 +25,7 @@ const MOCK_STUDENTS = Array.from({ length: 30 }, (_, i) => {
 const LEARNING_OBJECTIVE = 'To analyze how writers use language and structure to create tension in dystopian narratives.';
 
 export default function StudentSelfAssessment() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
   const getRatingStyle = (rating: string) => {
@@ -58,7 +58,7 @@ export default function StudentSelfAssessment() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/assess')}
+             onClick={() => router.push('/assess')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

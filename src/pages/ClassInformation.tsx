@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Search, Users, BookOpen, Clock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // Sample data
 const SAMPLE_CLASSES = [
@@ -65,7 +65,7 @@ const SUBJECTS = [
 ];
 
 export default function ClassInformation() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedYearGroup, setSelectedYearGroup] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -88,7 +88,7 @@ export default function ClassInformation() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/settings')}
+              onClick={() => router.push('/settings')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
@@ -173,7 +173,7 @@ export default function ClassInformation() {
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <button
-                    onClick={() => navigate('/my-timetable')}
+                    onClick={() => router.push('/my-timetable')}
                     className="text-sm text-[#FFC83D] hover:text-[#E6B434] transition-colors"
                   >
                     View in Planning

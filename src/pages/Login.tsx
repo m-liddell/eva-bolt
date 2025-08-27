@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { AlertCircle, Lock, Mail } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 export default function Login() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,15 +11,22 @@ export default function Login() {
 
   useEffect(() => {
     // Check if already logged in
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        navigate('/');
+    const checkSession = () => {
+      const mockSession = localStorage.getItem('mockSession');
+      if (mockSession) {
+        try {
+          const session = JSON.parse(mockSession);
+          if (session.expires_at > Date.now()) {
+            router.push('/');
+          }
+        } catch (e) {
+          localStorage.removeItem('mockSession');
+        }
       }
     };
     
     checkSession();
-  }, [navigate]);
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,7 +116,7 @@ export default function Login() {
       console.log('Login successful! Created session for:', email);
 
       // Force a page reload to trigger auth state change
-      window.location.href = location.state?.from?.pathname || '/';
+      window.location.href = '/';
     } catch (err) {
       console.error('Login error:', err);
       setError(err instanceof Error ? err.message : 'Login failed. Please try again.');

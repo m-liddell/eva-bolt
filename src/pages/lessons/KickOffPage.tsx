@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Brain, Clock, Users, Target, BookOpen, CheckCircle2, Play, Maximize2, ExternalLink } from 'lucide-react';
 import { NavigationArrow } from '../../components/NavigationArrow';
 import { MidAssistant } from '../../components/MidAssistant';
 import { MiniAssistant } from '../../components/MiniAssistant';
 
 export default function KickOffPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
   const [timer, setTimer] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   
   // Extract lesson data from location state if available
-  const lessonData = location.state?.lesson || {
+  const lessonData = {
     yearGroup: 'Year 10',
     class: 'A',
     subject: 'English',
@@ -265,8 +264,8 @@ export default function KickOffPage() {
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <NavigationArrow direction="left" onClick={() => navigate('/')} />
-              <NavigationArrow direction="right" onClick={() => navigate('/lesson/dystopian-writing')} />
+              <NavigationArrow direction="left" onClick={() => router.push('/')} />
+              <NavigationArrow direction="right" onClick={() => router.push('/lesson/dystopian-writing')} />
             </div>
           </div>
         </div>

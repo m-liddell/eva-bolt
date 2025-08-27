@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Award, Download, Calendar, Clock, Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // Mock certificates
 const CERTIFICATES = [
@@ -35,7 +35,7 @@ const CERTIFICATES = [
 ];
 
 export default function MyCertificates() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredCertificates = CERTIFICATES.filter(cert => 
@@ -49,7 +49,7 @@ export default function MyCertificates() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

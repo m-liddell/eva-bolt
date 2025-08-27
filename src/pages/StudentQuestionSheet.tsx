@@ -1,11 +1,18 @@
 import React from 'react';
 import { ChevronLeft, Clock, Target, FileText, AlertCircle } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export default function StudentQuestionSheet() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const assessment = location.state?.assessment;
+  const router = useRouter();
+  
+  // Get assessment data from sessionStorage
+  const [assessment] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('generatedAssessment');
+      return stored ? JSON.parse(stored) : null;
+    }
+    return null;
+  });
 
   if (!assessment) {
     return (
@@ -13,7 +20,7 @@ export default function StudentQuestionSheet() {
         <div className="text-center">
           <p className="text-gray-600">No assessment data available</p>
           <button
-            onClick={() => navigate('/assessment-design')}
+            onClick={() => router.push('/assessment-design')}
             className="mt-4 px-4 py-2 bg-[#FFC83D] text-white rounded-lg hover:bg-[#E6B434] transition-colors"
           >
             Return to Assessment Design
@@ -30,7 +37,7 @@ export default function StudentQuestionSheet() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/generated-assessment')}
+             onClick={() => router.push('/generated-assessment')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

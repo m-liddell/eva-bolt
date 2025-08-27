@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { 
   Calendar, 
   BookOpen, 
@@ -325,7 +325,7 @@ const GridSection: React.FC<{
 
 // Main Component
 function Home() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { sortedLessons, hasLessons, hasNextLesson } = useLessonsData();
   const { showOnboarding, setShowOnboarding, isLoading, completeOnboarding, resetOnboarding } = useOnboarding();
 
@@ -343,7 +343,7 @@ function Home() {
 
   const handleTermClick = (term: string) => {
     if (term === 'Autumn') {
-      navigate('/my-timetable');
+      router.push('/my-timetable');
     }
   };
 
@@ -431,19 +431,19 @@ function Home() {
     if (isLessonFullyPlanned(lesson)) {
       // For dystopian lessons, always try to route to interactive version first
       if (lesson.theme === 'Dystopian Fiction' && lesson.week >= 1 && lesson.week <= 6) {
-        navigate(`/lesson/dystopian-lesson-${lesson.week}/starter`, { state: { lesson } });
+        router.push(`/lesson/dystopian-lesson-${lesson.week}/starter`);
         return;
       }
       
       // For other lessons, check for interactive routes
       const route = getInteractiveLessonRoute(lesson);
-      if (route !== '/teach/lesson') {
+      router.push(route);
         navigate(route, { state: { lesson } });
       } else {
         navigate('/teach/lesson', { state: { lesson } });
       }
     } else {
-      navigate('/resources', { state: { lesson } });
+      router.push('/resources');
     }
   };
 
@@ -453,13 +453,13 @@ function Home() {
       id: 'mark',
       title: 'Mark',
       description: 'Grade student work',
-      onClick: () => navigate('/assess')
+      onClick: () => router.push('/assess')
     },
     {
       id: 'design',
       title: 'Design',
       description: 'Create assessment',
-      onClick: () => navigate('/assessment-design')
+      onClick: () => router.push('/assessment-design')
     }
   ];
 
@@ -468,13 +468,13 @@ function Home() {
       id: 'training',
       title: 'Training',
       description: 'View courses',
-      onClick: () => navigate('/training')
+      onClick: () => router.push('/training')
     },
     {
       id: 'certificates',
       title: 'Certificates',
       description: 'My achievements',
-      onClick: () => navigate('/certificates')
+      onClick: () => router.push('/certificates')
     }
   ];
 
@@ -483,13 +483,13 @@ function Home() {
       id: 'statistics',
       title: 'My Statistics',
       description: 'View analytics',
-      onClick: () => navigate('/teaching-patterns')
+      onClick: () => router.push('/teaching-patterns')
     },
     {
       id: 'student-reports',
       title: 'Student Reports',
       description: 'Generate reports',
-      onClick: () => navigate('/end-of-year')
+      onClick: () => router.push('/end-of-year')
     }
   ];
 

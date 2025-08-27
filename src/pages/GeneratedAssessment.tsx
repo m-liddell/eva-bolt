@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Download, Users, Target, FileText, Edit2, Save, CheckCircle2, AlertCircle, Eye, Settings, Calendar, BookOpen } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useCalendarStore } from '../store/calendarStore';
 
 // Mock student data
@@ -54,9 +54,17 @@ const MOCK_STUDENTS = [
 ];
 
 export default function GeneratedAssessment() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const assessment = location.state?.assessment;
+  const router = useRouter();
+  
+  // Get assessment data from sessionStorage
+  const [assessment, setAssessment] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('generatedAssessment');
+      return stored ? JSON.parse(stored) : null;
+    }
+    return null;
+  });
+  
   const [editingFeedback, setEditingFeedback] = useState<string | null>(null);
   const [editedFeedback, setEditedFeedback] = useState<Record<string, string>>({});
   const [editingQuestion, setEditingQuestion] = useState<string | null>(null);
@@ -69,7 +77,7 @@ export default function GeneratedAssessment() {
         <div className="text-center">
           <p className="text-gray-600">No assessment data available</p>
           <button
-            onClick={() => navigate('/assessment-design')}
+            onClick={() => router.push('/assessment-design')}
             className="mt-4 px-4 py-2 bg-[#FFC83D] text-white rounded-lg hover:bg-[#E6B434] transition-colors"
           >
             Return to Assessment Design
@@ -170,7 +178,7 @@ export default function GeneratedAssessment() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/assessment-design')}
+             onClick={() => router.push('/assessment-design')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />

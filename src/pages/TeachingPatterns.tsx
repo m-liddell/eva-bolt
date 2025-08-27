@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, BarChart2, ArrowUpRight, ArrowDownRight, Minus, Users, BookOpen, Target, Brain, Info, X, CheckCircle2, AlertCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // Mock data for teaching patterns
 const TEACHING_DATA = {
@@ -116,7 +116,7 @@ const TEACHING_DATA = {
 };
 
 function MyStatistics() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [selectedTimeframe, setSelectedTimeframe] = useState('This Term');
   const [selectedStrategy, setSelectedStrategy] = useState<string | null>(null);
 
@@ -135,7 +135,7 @@ function MyStatistics() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
