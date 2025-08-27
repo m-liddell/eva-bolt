@@ -7,9 +7,29 @@ export function middleware(request: NextRequest) {
   const isProtectedRoute = !isAuthPage
 
   if (isProtectedRoute) {
-    // In a real app, you would check for valid session/token
-    // For now, we'll just allow all requests through
-    return NextResponse.next()
+    // Check for authentication in cookies or headers
+    const authCookie = request.cookies.get('mockSession')
+    
+    if (!authCookie) {
+      // Redirect to login if not authenticated
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+    
+    try {
+      // Validate session if cookie exists
+      const session = JSON.parse(authCookie.value)
+      if (!session.expires_at || session.expires_at <= Date.now()) {
+        // Session expired, redirect to login
+        const response = NextResponse.redirect(new URL('/login', request.url))
+        response.cookies.delete('mockSession')
+        return response
+      }
+    } catch (error) {
+      // Invalid session data, redirect to login
+      const response = NextResponse.redirect(new URL('/login', request.url))
+      response.cookies.delete('mockSession')
+      return response
+    }
   }
 
   return NextResponse.next()

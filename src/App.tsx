@@ -99,17 +99,15 @@ function App({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
-        <ProtectedRoute>
-          <ProtectedApp
-            isMenuOpen={isMenuOpen}
-            setIsMenuOpen={setIsMenuOpen}
-            showAIAssistant={showAIAssistant}
-            setShowAIAssistant={setShowAIAssistant}
-            lessonInfo={lessonInfo}
-          >
-            {children}
-          </ProtectedApp>
-        </ProtectedRoute>
+        <ProtectedApp
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          showAIAssistant={showAIAssistant}
+          setShowAIAssistant={setShowAIAssistant}
+          lessonInfo={lessonInfo}
+        >
+          {children}
+        </ProtectedApp>
       </div>
     </ThemeProvider>
   );

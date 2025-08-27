@@ -114,11 +114,14 @@ export default function Login() {
       localStorage.setItem('mockUser', JSON.stringify(mockUser));
       localStorage.setItem('mockSession', JSON.stringify(mockSession));
       localStorage.setItem('currentUserEmail', email.trim());
+      
+      // Also store in cookies for middleware
+      document.cookie = `mockSession=${JSON.stringify(mockSession)}; path=/; max-age=${24 * 60 * 60}`;
 
       console.log('Login successful! Created session for:', email);
 
-      // Navigate to home page
-      router.push('/');
+      // Force a page reload to trigger middleware check
+      window.location.href = '/';
     } catch (err) {
       console.error('Login error:', err);
       setError(err instanceof Error ? err.message : 'Login failed. Please try again.');

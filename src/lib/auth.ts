@@ -57,6 +57,8 @@ export const signOut = () => {
   localStorage.removeItem('mockSession');
   localStorage.removeItem('mockUser');
   localStorage.removeItem('currentUserEmail');
+  // Also remove from cookies for middleware
+  document.cookie = 'mockSession=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   window.location.href = '/login';
 };
 
