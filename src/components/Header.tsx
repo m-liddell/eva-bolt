@@ -2,13 +2,20 @@
 
 'use client';
 
+'use client';
 import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, Bell, Search, Users, Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 
 const getUserInitials = (): string => {
   try {
+    // Check if we're on the client side
+    if (typeof window === 'undefined') {
+      return 'T'; // Default for server-side rendering
+    }
+    
     const currentUserEmail = localStorage.getItem('currentUserEmail');
     if (currentUserEmail) {
       const accountKey = `account_${currentUserEmail}`;
@@ -41,7 +48,13 @@ interface HeaderProps {
 
 export function Header({ onMenuClick, onAIClick, lessonInfo }: HeaderProps) {
   const pathname = usePathname();
+  const [userInitials, setUserInitials] = useState('T');
   const isLessonPage = pathname.includes('/lesson/');
+
+  // Update user initials on client side only
+  useEffect(() => {
+    setUserInitials(getUserInitials());
+  }, []);
 
   const getPhaseIcon = () => {
     if (!lessonInfo?.phase) return null;
@@ -129,7 +142,7 @@ export function Header({ onMenuClick, onAIClick, lessonInfo }: HeaderProps) {
           <Bell className="w-4 h-4 text-gray-600" />
           <div className="w-7 h-7 rounded-full overflow-hidden bg-[#FFC83D] flex items-center justify-center">
             <span className="text-white font-bold text-sm">
-              {getUserInitials()}
+              {userInitials}
             </span>
           </div>
         </div>

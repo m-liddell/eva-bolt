@@ -1,6 +1,8 @@
 'use client';
 
+'use client';
 import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Calendar, 
@@ -86,6 +88,11 @@ const getCurrentDate = (): string => {
 
 const getUserDisplayName = (): string => {
   try {
+    // Check if we're on the client side
+    if (typeof window === 'undefined') {
+      return 'Teacher'; // Default for server-side rendering
+    }
+    
     const currentUserEmail = localStorage.getItem('currentUserEmail');
     if (currentUserEmail) {
       const accountKey = `account_${currentUserEmail}`;
@@ -157,9 +164,16 @@ const useLessonsData = () => {
 
 // Components
 const WelcomeHeader: React.FC = () => (
+  const [displayName, setDisplayName] = useState('Teacher');
+
+  useEffect(() => {
+    setDisplayName(getUserDisplayName());
+  }, []);
+
+  return (
   <div className="flex items-center justify-between mb-6">
     <div>
-      <h1 className="text-2xl font-bold text-[#768396] mb-1">Welcome back, {getUserDisplayName()}</h1>
+      <h1 className="text-2xl font-bold text-[#768396] mb-1">Welcome back, {displayName}</h1>
       <p className="text-sm text-gray-600">{getCurrentDate()}</p>
     </div>
     <div className="flex items-center gap-3">
@@ -169,6 +183,7 @@ const WelcomeHeader: React.FC = () => (
       </div>
     </div>
   </div>
+  );
 );
 
 const TermCard: React.FC<{
