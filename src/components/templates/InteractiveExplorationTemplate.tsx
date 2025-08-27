@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Zap, Target, Clock, Edit2, Save, X } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -181,7 +181,7 @@ function EditModal({ isOpen, onClose, title, content, onSave }: EditModalProps) 
 }
 
 export function InteractiveExplorationTemplate({ lessonData, navigationData, showEditButtons = true }: InteractiveExplorationProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const themeColors = getThemeColors(lessonData.theme);
   
   const [editingPanel, setEditingPanel] = useState<string | null>(null);
@@ -305,14 +305,14 @@ export function InteractiveExplorationTemplate({ lessonData, navigationData, sho
                   <span>Starter</span>
                 </button>
                 <button
-                  onClick={() => navigate(navigationData.nextRoute)}
+                  onClick={() => router.push(navigationData.nextRoute)}
                   className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Main</span>
                 </button>
                 <button
-                  onClick={() => navigate(navigationData.nextRoute.replace('/main', '/plenary'))}
+                  onClick={() => router.push(navigationData.nextRoute.replace('/main', '/plenary'))}
                   className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
                 >
                   <CheckCircle2 className="w-4 h-4" />
@@ -599,8 +599,8 @@ export function InteractiveExplorationTemplate({ lessonData, navigationData, sho
 
           {/* Navigation */}
           <div className="flex justify-between mt-6">
-            <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-            <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+            <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+            <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
           </div>
         </div>
 

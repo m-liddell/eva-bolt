@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Globe, Rocket, Trophy, Clock } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -103,7 +103,7 @@ interface ApplicationExtensionProps {
 }
 
 export default function ApplicationExtensionTemplate({ lessonData, navigationData }: ApplicationExtensionProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -297,8 +297,8 @@ export default function ApplicationExtensionTemplate({ lessonData, navigationDat
             </div>
 
             <div className="flex justify-between mt-6">
-              <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-              <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+              <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+              <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
             </div>
           </div>
       </div>

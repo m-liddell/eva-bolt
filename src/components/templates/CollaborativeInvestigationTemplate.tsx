@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Users, Search, MessageSquare, Clock, Play, Pause, RotateCcw } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -155,7 +155,7 @@ const getGrammarExplanations = () => ({
   dystopian_theme: "Dystopian themes explore societal control, loss of freedom, environmental destruction, or technological oppression. They reflect real-world concerns about where society might be heading."
 });
 export default function CollaborativeInvestigationTemplate({ lessonData, navigationData }: CollaborativeInvestigationProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -275,7 +275,7 @@ export default function CollaborativeInvestigationTemplate({ lessonData, navigat
             </div>
             <div className="flex items-center gap-3">
               <button
-                onClick={() => navigate(navigationData.previousRoute)}
+                onClick={() => router.push(navigationData.previousRoute)}
                 className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors flex items-center gap-2"
               >
                 <Brain className="w-4 h-4" />
@@ -288,7 +288,7 @@ export default function CollaborativeInvestigationTemplate({ lessonData, navigat
                 <span>Main</span>
               </button>
               <button
-                onClick={() => navigate(navigationData.nextRoute)}
+                onClick={() => router.push(navigationData.nextRoute)}
                 className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
               >
                 <CheckCircle2 className="w-4 h-4" />
@@ -812,8 +812,8 @@ export default function CollaborativeInvestigationTemplate({ lessonData, navigat
 
           {/* Navigation */}
           <div className="flex justify-between mt-6">
-            <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-            <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+            <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+            <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
           </div>
         </div>
       </div>

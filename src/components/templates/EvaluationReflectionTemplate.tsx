@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { CheckCircle, Heart, Target, Clock } from 'lucide-react';
 import { LessonLayout } from '../../components/LessonLayout';
 import { NavigationArrow } from '../../components/NavigationArrow';
@@ -116,7 +116,7 @@ export function EvaluationReflectionTemplate({
   peerAppreciationFocus, 
   goalSettingAreas 
 }: EvaluationReflectionProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -342,8 +342,8 @@ export function EvaluationReflectionTemplate({
             </div>
 
             <div className="flex justify-between mt-6">
-              <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-              <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+              <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+              <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
             </div>
           </div>
       </div>

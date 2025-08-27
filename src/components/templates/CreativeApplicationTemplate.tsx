@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Palette, Target, Clock, Save, Download, Share2, Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -107,7 +107,7 @@ interface CreativeApplicationProps {
 }
 
 export default function CreativeApplicationTemplate({ lessonData, navigationData }: CreativeApplicationProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const themeColors = getThemeColors(lessonData.theme);
   
   const [creativeWork, setCreativeWork] = useState('');
@@ -185,7 +185,7 @@ export default function CreativeApplicationTemplate({ lessonData, navigationData
                 <span>Main</span>
               </button>
               <button
-                onClick={() => navigate(navigationData.nextRoute)}
+                onClick={() => router.push(navigationData.nextRoute)}
                 className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
               >
                 <CheckCircle2 className="w-4 h-4" />
@@ -403,8 +403,8 @@ export default function CreativeApplicationTemplate({ lessonData, navigationData
 
           {/* Navigation */}
           <div className="flex justify-between mt-6">
-            <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-            <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+            <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+            <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
           </div>
         </div>
       </div>

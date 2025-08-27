@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Gamepad2, Timer, Trophy, Shuffle, BookOpen, Brain, CheckCircle2 } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -114,7 +114,7 @@ const getThemeColors = (theme?: string) => {
 };
 
 export default function KnowledgeRetrievalGameTemplate({ lessonData, navigationData }: KnowledgeRetrievalGameProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -413,14 +413,14 @@ export default function KnowledgeRetrievalGameTemplate({ lessonData, navigationD
                   <span>Starter</span>
                 </button>
                 <button
-                  onClick={() => navigate(navigationData.nextRoute)}
+                  onClick={() => router.push(navigationData.nextRoute)}
                   className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Main</span>
                 </button>
                 <button
-                   onClick={() => navigate(navigationData.nextRoute.replace('/starter', '/plenary'))}
+                   onClick={() => router.push(navigationData.nextRoute.replace('/starter', '/plenary'))}
                   className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
                 >
                   <CheckCircle2 className="w-4 h-4" />

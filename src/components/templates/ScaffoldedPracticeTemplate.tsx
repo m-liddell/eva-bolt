@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Target, TrendingUp, Users, Clock, X } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -142,7 +142,7 @@ interface ScaffoldedPracticeProps {
 }
 
 export default function ScaffoldedPracticeTemplate({ lessonData, navigationData }: ScaffoldedPracticeProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -612,8 +612,8 @@ export default function ScaffoldedPracticeTemplate({ lessonData, navigationData 
 
         {/* Navigation */}
         <div className="flex justify-between mt-6">
-          <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-          <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+          <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+          <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
         </div>
       </div>
     </div>

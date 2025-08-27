@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { MessageSquare, Eye, Users, Clock, Play, Pause, ArrowRight, CheckCircle, BookOpen } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -103,7 +103,7 @@ interface QuickFireDiscussionProps {
 }
 
 export default function QuickFireDiscussionTemplate({ lessonData, navigationData }: QuickFireDiscussionProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get theme colors
   const themeColors = getThemeColors(lessonData.theme);
@@ -258,14 +258,14 @@ export default function QuickFireDiscussionTemplate({ lessonData, navigationData
                 <span>Starter</span>
               </button>
               <button
-                onClick={() => navigate(navigationData.nextRoute)}
+                onClick={() => router.push(navigationData.nextRoute)}
                 className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Main</span>
               </button>
               <button
-                onClick={() => navigate(navigationData.nextRoute.replace('/main', '/plenary'))}
+                onClick={() => router.push(navigationData.nextRoute.replace('/main', '/plenary'))}
                 className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors flex items-center gap-2"
               >
                 <CheckCircle2 className="w-4 h-4" />
@@ -561,8 +561,8 @@ export default function QuickFireDiscussionTemplate({ lessonData, navigationData
 
         {/* Navigation */}
         <div className="flex justify-between mt-8">
-          <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-          <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+          <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+          <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
         </div>
       </div>
     </div>

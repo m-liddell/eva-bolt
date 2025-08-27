@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Users, MessageCircle, Eye, RotateCcw, Clock, BookOpen, Brain, CheckCircle2 } from 'lucide-react';
 import { LessonLayout } from '../LessonLayout';
 import { NavigationArrow } from '../NavigationArrow';
@@ -138,7 +138,7 @@ interface SocraticCircleProps {
 }
 
 export default function SocraticCircleTemplate({ lessonData, navigationData }: SocraticCircleProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const themeColors = getThemeColors(lessonData.theme);
   
   const [currentRole, setCurrentRole] = useState<'inner' | 'outer'>('inner');
@@ -229,7 +229,7 @@ export default function SocraticCircleTemplate({ lessonData, navigationData }: S
                 <span>Starter</span>
               </button>
               <button
-                onClick={() => navigate(navigationData.previousRoute.replace('/starter', '/main'))}
+                onClick={() => router.push(navigationData.previousRoute.replace('/starter', '/main'))}
                 className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
               >
                 <BookOpen className="w-4 h-4" />
@@ -561,8 +561,8 @@ export default function SocraticCircleTemplate({ lessonData, navigationData }: S
 
           {/* Navigation */}
           <div className="flex justify-between mt-6">
-            <NavigationArrow direction="left" onClick={() => navigate(navigationData.previousRoute)} />
-            <NavigationArrow direction="right" onClick={() => navigate(navigationData.nextRoute)} />
+            <NavigationArrow direction="left" onClick={() => router.push(navigationData.previousRoute)} />
+            <NavigationArrow direction="right" onClick={() => router.push(navigationData.nextRoute)} />
           </div>
         </div>
       </div>
