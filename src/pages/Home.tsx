@@ -414,19 +414,6 @@ function Home() {
     return '/teach/lesson';
   };
 
-  // Legacy function for backward compatibility
-  const getDystopianLessonRoute = (lesson: Lesson): string => {
-    console.log("Starting lesson:", lesson);
-    
-    // Always try to get interactive route first
-    const route = getInteractiveLessonRoute(lesson);
-    if (route !== '/teach/lesson') {
-      navigate(route, { state: { lesson } });
-    } else {
-      navigate('/teach/lesson', { state: { lesson } });
-    }
-  };
-
   const handleLessonClick = (lesson: Lesson) => {
     if (isLessonFullyPlanned(lesson)) {
       // For dystopian lessons, always try to route to interactive version first
@@ -438,10 +425,6 @@ function Home() {
       // For other lessons, check for interactive routes
       const route = getInteractiveLessonRoute(lesson);
       router.push(route);
-        navigate(route, { state: { lesson } });
-      } else {
-        navigate('/teach/lesson', { state: { lesson } });
-      }
     } else {
       router.push('/resources');
     }
@@ -546,20 +529,20 @@ function Home() {
               onLessonClick={handleLessonClick}
             />
           ) : (
-            <EmptyLessonCard onClick={() => navigate('/my-timetable')} />
+            <EmptyLessonCard onClick={() => router.push('/my-timetable')} />
           )}
           
           <ActionButton
             title="This Week's Lessons"
             description={hasLessons ? 'View teaching schedule' : 'Create lessons first'}
-            onClick={() => navigate('/weekly-timetable')}
+            onClick={() => router.push('/weekly-timetable')}
             disabled={!hasLessons}
           />
           
           <ActionButton
             title="Quick-start"
             description="Begin a new lesson"
-            onClick={() => navigate('/quick-start')}
+            onClick={() => router.push('/quick-start')}
           />
         </div>
       </div>
