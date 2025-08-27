@@ -33,7 +33,11 @@
   }
 }
 
-#root {
+html, body {
+  min-height: 100vh;
+}
+
+#__next {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
