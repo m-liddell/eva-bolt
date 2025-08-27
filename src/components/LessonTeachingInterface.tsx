@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Play, Pause, SkipForward, Clock, Users, Target, Brain, BookOpen, CheckCircle2, ArrowLeft, ArrowRight, Eye, Settings, Timer, Volume2, VolumeX, Maximize2, Minimize2, ExternalLink } from 'lucide-react';
 import { useTimetableStore } from '../store/timetableStore';
 import { allEnhancedActivities } from '../data/enhancedLessonActivities';
@@ -39,7 +39,7 @@ interface LessonTeachingInterfaceProps {
 }
 
 export function LessonTeachingInterface({ lesson, onClose }: LessonTeachingInterfaceProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Function to get the appropriate interactive lesson component
   const getInteractiveLessonComponent = (lesson: any, phase: 'starter' | 'main' | 'plenary') => {
@@ -138,54 +138,33 @@ export function LessonTeachingInterface({ lesson, onClose }: LessonTeachingInter
         const activityTitle = lesson.activities[startingPhase].title;
         
         if (activityTitle.includes('Dystopian World Discovery') || activityTitle.includes('Future Vision')) {
-          navigate(`/lesson/dystopian-lesson-1/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-1/${startingPhase}`);
           return;
         } else if (activityTitle.includes('Complete Sentence') || activityTitle.includes('Sentence Foundation')) {
-          navigate(`/lesson/dystopian-lesson-2/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-2/${startingPhase}`);
           return;
         } else if (activityTitle.includes('Simple vs Compound') || activityTitle.includes('Sentence Power')) {
-          navigate(`/lesson/dystopian-lesson-3/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-3/${startingPhase}`);
           return;
         } else if (activityTitle.includes('Complex Sentence') || activityTitle.includes('Sophistication')) {
-          navigate(`/lesson/dystopian-lesson-4/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-4/${startingPhase}`);
           return;
         } else if (activityTitle.includes('Personification') || activityTitle.includes('Atmosphere')) {
-          navigate(`/lesson/dystopian-lesson-5/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-5/${startingPhase}`);
           return;
         } else if (activityTitle.includes('Simile') || activityTitle.includes('Impact Analysis')) {
-          navigate(`/lesson/dystopian-lesson-6/${startingPhase}`, { 
-            state: { lesson },
-            replace: true 
-          });
+          router.push(`/lesson/dystopian-lesson-6/${startingPhase}`);
           return;
         }
       }
       
       // If no activity title match, use week number
       if (lesson.week >= 1 && lesson.week <= 6) {
-        navigate(`/lesson/dystopian-lesson-${lesson.week}/${startingPhase}`, { 
-          state: { lesson },
-          replace: true 
-        });
+        router.push(`/lesson/dystopian-lesson-${lesson.week}/${startingPhase}`);
         return;
       }
     }
-  }, [lesson, navigate]);
+  }, [lesson, router]);
   
   const [currentPhase, setCurrentPhase] = useState<'starter' | 'main' | 'plenary'>('starter');
   const [timer, setTimer] = useState<number | null>(null);
@@ -276,7 +255,7 @@ export function LessonTeachingInterface({ lesson, onClose }: LessonTeachingInter
     } else {
       // Fallback to navigation if no interactive component
       const route = getInteractiveLessonRoute(lesson, currentPhase);
-      if (route) navigate(route, { state: { lesson } });
+      if (route) router.push(route);
     }
   };
 
@@ -847,7 +826,7 @@ export function LessonTeachingInterface({ lesson, onClose }: LessonTeachingInter
                 <h3 className="text-lg font-semibold text-gray-600 mb-2">No {currentPhase} activity planned</h3>
                 <p className="text-gray-500">This lesson phase needs to be planned before teaching.</p>
                 <button
-                  onClick={() => navigate('/resources')}
+                  onClick={() => router.push('/resources')}
                   className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Plan This Lesson
@@ -898,13 +877,13 @@ export function LessonTeachingInterface({ lesson, onClose }: LessonTeachingInter
             {/* Quick Actions */}
             <div className="mt-4 space-y-2">
               <button
-                onClick={() => navigate('/assess')}
+                onClick={() => router.push('/assess')}
                 className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 Quick Assessment
               </button>
               <button
-                onClick={() => navigate('/resources')}
+                onClick={() => router.push('/resources')}
                 className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Edit Lesson
