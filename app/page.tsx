@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-import { useState } from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
@@ -163,7 +161,7 @@ const useLessonsData = () => {
 };
 
 // Components
-const WelcomeHeader: React.FC = () => (
+const WelcomeHeader: React.FC = () => {
   const [displayName, setDisplayName] = useState('Teacher');
 
   useEffect(() => {
@@ -171,20 +169,24 @@ const WelcomeHeader: React.FC = () => (
   }, []);
 
   return (
-  <div className="flex items-center justify-between mb-6">
-    <div>
-      <h1 className="text-2xl font-bold text-[#768396] mb-1">Welcome back, {displayName}</h1>
-      <p className="text-sm text-gray-600">{getCurrentDate()}</p>
-    </div>
-    <div className="flex items-center gap-3">
-      <div className="px-3 py-1.5 bg-[#FFC83D]/10 rounded-lg flex items-center gap-2">
-        <Calendar className="w-4 h-4 text-[#FFC83D]" />
-        <span className="font-medium text-[#FFC83D] text-sm">{CURRENT_TERM} Term</span>
+    <div className="flex items-center justify-between mb-6">
+      <div>
+        <h1 className="text-2xl font-bold text-[#768396] mb-1">
+          Welcome back, {displayName}
+        </h1>
+        <p className="text-sm text-gray-600">{getCurrentDate()}</p>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="px-3 py-1.5 bg-[#FFC83D]/10 rounded-lg flex items-center gap-2">
+          <Calendar className="w-4 h-4 text-[#FFC83D]" />
+          <span className="font-medium text-[#FFC83D] text-sm">
+            {CURRENT_TERM} Term
+          </span>
+        </div>
       </div>
     </div>
-  </div>
   );
-);
+};
 
 const TermCard: React.FC<{
   term: string;
