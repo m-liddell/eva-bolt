@@ -167,7 +167,7 @@ const SmartPlanningSteps = ({
   onStep3EditLessons,
   onStep4ApproveWeek,
   stepCompletion,
-  navigate
+  router
 }: {
   currentStep: number;
   lessons: Lesson[];
@@ -184,7 +184,7 @@ const SmartPlanningSteps = ({
     markStepComplete: (term: string, step: number, message?: string) => void;
     isStepCompleted: (term: string, step: number) => boolean;
   };
-  navigate: (path: string) => void;
+  router: any;
 }) => {
   const isWeekApproved = weekApprovalStatus;
   const handleManualComplete = (step: number) => {
